@@ -57,10 +57,14 @@ Run the performance test:
 
 ```bash
 # Run with default duration (5 minutes)
-go run main.go -config config.yaml
+go run main.go --config config.yaml
 
 # Run with custom duration (30 seconds)
-go run main.go -config config.yaml -duration 30s
+go run main.go --config config.yaml --duration 30s
+
+# Build and run binary
+make build
+./bin/k8s-perf-test --config config.yaml
 ```
 
 ## Output
