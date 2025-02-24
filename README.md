@@ -37,6 +37,10 @@ cluster:
   insecure: false           # Optional
   qps: 100                  # Higher QPS to avoid throttling
   burst: 200                # Higher burst to avoid throttling
+  ignoreResources:
+    - "v1/componentstatuses"
+    - "v1/componentstatus"
+    - "v1/events"
 
 users:
   - username: "user-1"

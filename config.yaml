@@ -1,13 +1,21 @@
 cluster:
   apiServer: "https://kubernetes.example.com:6443"
-  caPath: "/path/to/ca.crt"  # Optional
-  insecure: false           # Optional
-  qps: 100                  # Higher QPS to avoid throttling
-  burst: 200                # Higher burst to avoid throttling
+  caPath: "/path/to/ca.crt"
+  insecure: false
+  qps: 100
+  burst: 200
+  includeDeprecated: false
+  ignoreResources:
+    - "events"                          # Ignore just by resource name
+    - "apps/v1/deployments"            # Ignore specific group/version/resource
+    - "pods"                           # Ignore pods across all groups
+    - "networking.k8s.io/v1/ingresses" # Ignore specific API group ingresses
+    - "v1/componentstatuses"    # Exact match with API version and plural form
+    - "v1/componentstatus"      # Also include singular form to be safe
 
 users:
   - username: "user1"
-    token: "token1"
+    token: "your-token-here"
     concurrency: 10
   - username: "user2"
     token: "token2"

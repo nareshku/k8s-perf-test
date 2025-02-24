@@ -3,11 +3,12 @@ package types
 import "time"
 
 type ClusterConfig struct {
-    APIServer string `yaml:"apiServer"`
-    CAPath    string `yaml:"caPath,omitempty"`     // Optional: path to CA cert
-    Insecure  bool   `yaml:"insecure,omitempty"`   // Optional: skip TLS verify
-	QPS       float32 `yaml:"qps,omitempty"`      // Default will be 50 if not set
-    Burst     int     `yaml:"burst,omitempty"` 
+    APIServer          	string   `yaml:"apiServer"`
+    CAPath            	string   `yaml:"caPath,omitempty"`     // Optional: path to CA cert
+    Insecure          	bool     `yaml:"insecure,omitempty"`   // Optional: skip TLS verify
+	QPS              	float32  `yaml:"qps,omitempty"`      // Default will be 50 if not set
+    Burst             	int      `yaml:"burst,omitempty"`
+    IgnoreResources   	[]string `yaml:"ignoreResources,omitempty"`
 }
 
 type UserConfig struct {
