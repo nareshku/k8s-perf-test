@@ -5,11 +5,11 @@ import (
 	"sync"
 	"sync/atomic"
 	"time"
-	
-	"k8s.io/client-go/dynamic"
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"github.com/nareshku/k8s-perf-test/types"
+
 	"github.com/nareshku/k8s-perf-test/pkg/discovery"
+	"github.com/nareshku/k8s-perf-test/types"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/client-go/dynamic"
 )
 
 type Worker struct {
@@ -38,7 +38,7 @@ func (w *Worker) ExecuteCallsWithDuration(ctx context.Context, resources []disco
 	for _, resource := range resources {
 		w.stats[resource.Name] = &types.CallStats{
 			ResourceType: resource.Name,
-			StartTime:   time.Now(),
+			StartTime:    time.Now(),
 		}
 	}
 	w.statsLock.Unlock()
@@ -48,7 +48,7 @@ func (w *Worker) ExecuteCallsWithDuration(ctx context.Context, resources []disco
 		wg.Add(1)
 		go func(r discovery.APIResource) {
 			defer wg.Done()
-			
+
 			// Keep making calls until context is cancelled
 			for {
 				select {
@@ -58,7 +58,7 @@ func (w *Worker) ExecuteCallsWithDuration(ctx context.Context, resources []disco
 					func() {
 						defer func() { <-sem }() // Release semaphore
 						err := w.makeAPICall(ctx, r)
-						
+
 						w.statsLock.Lock()
 						stats := w.stats[r.Name]
 						atomic.AddInt64(&stats.TotalCalls, 1)
@@ -104,7 +104,7 @@ func (w *Worker) makeAPICall(ctx context.Context, resource discovery.APIResource
 func (w *Worker) GetStats() []*types.CallStats {
 	w.statsLock.RLock()
 	defer w.statsLock.RUnlock()
-	
+
 	stats := make([]*types.CallStats, 0, len(w.stats))
 	for _, s := range w.stats {
 		stats = append(stats, s)
@@ -121,4 +121,4 @@ func isStatus5xx(err error) bool {
 func isStatus4xx(err error) bool {
 	// Implement status code checking logic
 	return false
-} 
+}

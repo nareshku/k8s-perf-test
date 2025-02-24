@@ -2,15 +2,16 @@ package summary
 
 import (
 	"fmt"
+	"os"
 	"strings"
 	"text/tabwriter"
-	"os"
+
 	"github.com/nareshku/k8s-perf-test/types"
 )
 
 func PrintSummary(allStats map[string][]*types.CallStats) {
 	w := tabwriter.NewWriter(os.Stdout, 0, 0, 2, ' ', 0)
-	
+
 	fmt.Fprintln(w, "\nPerformance Test Results:")
 	fmt.Fprintln(w, strings.Repeat("-", 120))
 	fmt.Fprintf(w, "%-30s\t%-25s\t%12s\t%10s\t%10s\t%10s\t%12s\n",
@@ -37,6 +38,6 @@ func PrintSummary(allStats map[string][]*types.CallStats) {
 			)
 		}
 	}
-	
+
 	w.Flush()
-} 
+}
